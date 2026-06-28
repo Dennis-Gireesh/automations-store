@@ -331,16 +331,20 @@ body {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 32px;
+  min-height: 100%;
   transition: var(--transition);
 }
 
@@ -359,6 +363,11 @@ body {
   background: linear-gradient(135deg, var(--bg-secondary), rgba(245, 158, 11, 0.05));
   border: 2px solid var(--gold);
   grid-column: 1 / -1;
+}
+
+/* Center the final single pack so the 7-product grid does not leave an orphan card on the left. */
+.product-card--centered {
+  grid-column: 2;
 }
 
 .product-badge {
@@ -400,6 +409,7 @@ body {
 .product-features {
   list-style: none;
   margin-bottom: 24px;
+  flex: 1;
 }
 
 .product-features li {
@@ -429,6 +439,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-top: auto;
   margin-bottom: 20px;
 }
 
@@ -675,6 +686,18 @@ body {
 }
 
 /* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-card--centered {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, calc((100% - 24px) / 2));
+  }
+}
+
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
@@ -694,6 +717,12 @@ body {
 
   .product-grid {
     grid-template-columns: 1fr;
+  }
+
+  .product-card--centered {
+    grid-column: auto;
+    justify-self: stretch;
+    width: 100%;
   }
 
   .product-card.all-access {
